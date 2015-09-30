@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>LeoJs--dom--index</title>
+    <script src="../../src/lib/jquery.js"></script>
+    <style>
+    body {
+        width: 2000px;
+    }
+
+    div.demo {
+        background: #CCCCCC none repeat scroll 0 0;
+        border: 3px solid #666666;
+        margin: 5px;
+        padding: 5px;
+        position: relative;
+        width: 200px;
+        height: 100px;
+        overflow: auto;
+    }
+
+    p {
+        margin: 10px;
+        padding: 5px;
+        border: 2px solid #666;
+        width: 1000px;
+        height: 1000px;
+    }
+    </style>
+</head>
+
+<body class="leo">
+    <div id="leo">
+        <div class="remove"></div>
+        <h2 id='frist'></h2>
+        <h1 id="h2">leo
+            <div class="leo" id="abc">
+                <h2 class="leo" id="in">1321</h2>
+                <h1>1231221</h1>
+        <span class="remove"></span>
+    </div>
+    </h1>
+    <div></div>
+    <h1 class="leo" id="eee">leo<span class="leo">12312321</span></h1>
+    <h1 class="leo">leo</h1>
+    <h1 id='last'>last</h1>
+    <div class="append" id="api">
+        <span>hahaha</span>
+    </div>
+    <span>sdfsdfsfsds</span>
+    <div class="append" id='jquery'>hahahha</div>
+    <div id='unwrap1'>
+        <div class="unwrap">unwrap</div>
+    </div>
+    <div id='unwrap2'>
+        <div class="unwrap">unwrap</div>
+    </div>
+    <input type="button" leo="tiancai" lee='tiancai'>
+    <input type="button" leo="tiancaitiancai" lee='tiancai'>
+    <select id="single">
+        <option value="leo">Single</option>
+        <option value="leo1">Single2</option>
+    </select>
+    <select id="multiple" multiple="multiple">
+        <option selected="selected" value="1231321">Multiple</option>
+        <option value="Multiple2">Multiple2</option>
+        <option selected="selected">Multiple3</option>
+    </select>
+    <br/>
+    <input type="checkbox" name="checkboxname" value="check1" /> check1
+    <input type="checkbox" name="checkboxname" value="check2" /> check2
+    <input type="radio" name="r" value="radio1" /> radio1
+    <input type="radio" name="r" value="radio2" /> radio2
+    <textarea id="textarea">344334343</textarea>
+    </div>
+    <div id="box" style="background: black; color: snow; width:100px; padding:10px;box-sizing:padding-box;border:10px solid red;margin: 10px">Click me to grow</div>
+    <div id="class" class="leo sdfsdfs">aaaa</div>
+    <div class="demo">
+        <h1>lalala</h1>
+        <p>Hello</p>
+    </div>
+    <div class="demo">
+        <h1>lalala34243243</h1>
+        <p>Hello</p>
+    </div>
+    <ul class="level-1">
+        <li class="item-i">I</li>
+        <li class="item-ii" style="position: absolute;">II
+            <ul class="level-2">
+                <li class="item-a">A</li>
+                <li class="item-b">B
+                    <ul class="level-3">
+                        <li class="item-1">1</li>
+                        <li class="item-2">2</li>
+                        <li class="item-3">3</li>
+                    </ul>
+                </li>
+                <li class="item-c">C</li>
+            </ul>
+        </li>
+        <li class="item-iii">III</li>
+    </ul>
+    <div id="pos" style="position: absolute; top:100px; left:20px">pos</div>
+    <iframe id="iframe" src="index.html" frameborder="0"></iframe>
+    <div class="user" data-id="1234567890" data-user="johndoe" data-date-of-birth>John Doe</div>
+    <div class="user" data-id="1234567890" data-user="johndoe" data-date-of-birth>John Doe</div>
+</body>
+    <script src="../../dist/LeoJs.js"></script>
+</html>
