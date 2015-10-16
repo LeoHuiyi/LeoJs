@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>animate</title>
+        <style type="text/css">
+            * {
+                font-size: 1em;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                padding: 40px;
+                background: #e3e3e7;
+            }
+
+            body,
+            td,
+            input,
+            textarea {
+                font-family: helvetica neue, sans-serif;
+                font-size: 9pt;
+                line-height: 1.4;
+                color: #444;
+                text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+            }
+
+            body {
+                padding-top: 50px;
+            }
+
+            .use {
+                position: fixed;
+                z-index: 10;
+                top: 0;
+                right: 0;
+                left: 0;
+                padding: 20px;
+                border-bottom: solid 1px rgba(0, 0, 0, .1);
+                background: rgba(250, 250, 250, .9);
+            }
+
+            .test {
+                float: left;
+                width: 220px;
+                margin: 0 20px 20px 0;
+                padding: 20px;
+                border-radius: 2px;
+                background: white;
+                box-shadow: 1px 1px 0 rgba(0, 0, 0, .05), -1px 1px 0 rgba(0, 0, 0, .05), 0 1px 5px rgba(0, 0, 0, .05);
+            }
+
+            .test .area {
+                position: relative;
+                width: auto;
+                height: 100px;
+                margin: 10px 0;
+            }
+
+            .test:hover {
+                box-shadow: 1px 1px 0 rgba(0, 0, 0, .05), -1px 1px 0 rgba(0, 0, 0, .05), 0 1px 5px rgba(0, 0, 0, .05), 0 0 0 4px rgba(0, 0, 0, .15);
+            }
+
+            .test h3 {
+                font-size: 1.2em;
+                line-height: 24px;
+                overflow: hidden;
+                margin-bottom: 2px;
+            }
+
+            .test h3 em {
+                font-size: .8em;
+                font-weight: 200;
+                font-style: normal;
+                float: right;
+                color: #37a;
+            }
+
+            .test .box {
+                line-height: 32px;
+                position: absolute;
+                z-index: 2;
+                top: 50%;
+                left: 50%;
+                width: 32px;
+                height: 32px;
+                margin: -16px 0 0 -16px;
+                text-align: center;
+                color: #ddd;
+                border-radius: 2px;
+                background: #505070;
+            }
+
+            .test .ghost {
+                z-index: 1;
+                background: #ddd;
+                box-shadow: inset 2px 2px 2px rgba(0, 0, 0, .07), inset 0 0 0 1px rgba(0, 0, 0, .03);
+            }
+
+            .test pre {
+                font-family: menlo, monospace;
+                font-size: 9pt;
+                line-height: 1.5;
+                margin: 20px -20px -20px -20px;
+                padding: 10px;
+                white-space: pre-wrap;
+                border-top: solid 1px #ddd;
+                background: #eee;
+            }
+
+            .group-heading {
+                font-size: 1.6em;
+                font-weight: 200;
+                clear: both;
+                margin: 20px 0 20px 0;
+                padding-bottom: 10px;
+                color: #70a0c0;
+                border-bottom: dotted 1px #ccc;
+            }
+
+            .use button {
+                padding: 0 10px;
+            }
+
+            .use a,
+            .use button {
+                margin: 0 5px;
+            }
+
+            .description {
+                padding-bottom: 20px;
+                border-bottom: dotted 1px #ccc;
+            }
+
+            .description h1 {
+                font-size: 2.5em;
+                font-weight: 200;
+                color: #707090;
+            }
+
+            .description p {
+                font-size: 1.2em;
+                width: 500px;
+                color: #707090;
+            }
+
+            .description .version {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+        </style>
+        <script src="../../src/lib/jquery.js"></script>
+    </head>
+    <body>
+        <div class="leo"></div>
+        <div class="leo"></div>
+        <div class='tests'></div>
+        <!-- <div class="box" style="width:100px;height:100px;background:red;transform:translate(100px, 200px);"></div> -->
+    </body>
+    <script src="../../dist/domAnimate.js"></script>
+</html>

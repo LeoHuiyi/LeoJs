@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>attr</title>
+        <style>
+            p { margin: 8px; font-size:16px; }
+            .selected { color:red; }
+            .highlight { background:yellow; }
+        </style>
+        <script src="../../src/lib/jquery.js"></script>
+    </head>
+    <body>
+        <input type="checkbox" checked="checked" disabled/>
+        <input type="checkbox" />
+        <input type="checkbox" />
+        <input type="checkbox"  checked="checked" />
+        <p></p>
+        <img class="greatphoto" src="brush-seller.jpg" alt="brush seller" />
+        <img class="greatphoto" src="brush-seller.jpg" alt="brush seller" />
+        <select id="single">
+            <option>Single</option>
+            <option selected>Single2</option>
+        </select>
+        <select id="multiple" multiple>
+            <option selected>Multiple1</option>
+            <option>Multiple2</option>
+            <option selected>Multiple3</option>
+        </select>
+        <br/>
+        <textarea name="aaa" class="text">
+            hahahahahah
+        </textarea>
+        <input type="checkbox" leo="tc" name="checkboxname" value="check1"/> check1
+        <input type="checkbox" leo="tc"name="checkboxname" value="check2" checked/> check2
+        <input type="radio" leo="tc"  name="r" value="radio1"/> radio1
+        <input type="radio" leo="tc"  name="r" value="radio2" checked/> radio2
+        <p>Hello</p>
+        <p>and</p>
+        <p>Goodbye</p>
+    </body>
+    <script src="../../dist/domAttr.js"></script>
+</html>
