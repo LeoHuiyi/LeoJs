@@ -146,7 +146,7 @@
 
 	        if (typeof _ret === "object") return _ret.v;
 	    }
-	};
+	}
 
 	function getAll(context, tag) {
 	    var ret = typeof context.getElementsByTagName !== "undefined" ? context.getElementsByTagName(tag || "*") : typeof context.querySelectorAll !== "undefined" ? context.querySelectorAll(tag || "*") : [];
@@ -573,7 +573,7 @@
 	    }
 
 	    return _constJs.slice.call(context.querySelectorAll(selector));
-	};
+	}
 
 	function sortOrder(a, b) {
 	    if (a === b) {
@@ -600,7 +600,7 @@
 	    }
 
 	    return a.compareDocumentPosition ? -1 : 1;
-	};
+	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
 	    $id: function $id(id) {
@@ -1813,7 +1813,7 @@
 
 	for (var _name in treeObj) {
 	    _loop(_name);
-	};
+	}
 
 	exports.leoDom = _coreJs.leoDom;
 

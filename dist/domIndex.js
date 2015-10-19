@@ -146,7 +146,7 @@
 
 	        if (typeof _ret === "object") return _ret.v;
 	    }
-	};
+	}
 
 	function getAll(context, tag) {
 	    var ret = typeof context.getElementsByTagName !== "undefined" ? context.getElementsByTagName(tag || "*") : typeof context.querySelectorAll !== "undefined" ? context.querySelectorAll(tag || "*") : [];
@@ -573,7 +573,7 @@
 	    }
 
 	    return _constJs.slice.call(context.querySelectorAll(selector));
-	};
+	}
 
 	function sortOrder(a, b) {
 	    if (a === b) {
@@ -600,7 +600,7 @@
 	    }
 
 	    return a.compareDocumentPosition ? -1 : 1;
-	};
+	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
 	    $id: function $id(id) {
@@ -1197,8 +1197,6 @@
 
 	var _cssJs = __webpack_require__(15);
 
-	var _constJs = __webpack_require__(4);
-
 	_privateJs._leoDom.setApi(_cssJs.leoDom, {
 	    animateSpeeds: {
 	        slow: 600,
@@ -1362,7 +1360,7 @@
 	        },
 
 	        set: function set(elem, value) {
-	            var t = _cssJs.leoDom.$css(elem, 'transit:transform');;
+	            var t = _cssJs.leoDom.$css(elem, 'transit:transform');
 	            t.setFromString(prop, value);
 
 	            _cssJs.leoDom.$css(elem, {
@@ -2356,7 +2354,7 @@
 	function remove(element, events, fn, selector, capture) {
 	    var id = zid(element);
 
-	    ;(events || '').split(/\s/).forEach(function (event) {
+	    (events || '').split(/\s/).forEach(function (event) {
 	        findHandlers(element, event, fn, selector).forEach(function (handler) {
 	            delete handlers[id][handler.i];
 
@@ -2645,8 +2643,7 @@
 	var emptyStyle = _constJs.document.createElement("div").style;
 
 	(function () {
-	    var pixelPositionVal = undefined,
-	        boxSizingReliableVal = undefined,
+	    var boxSizingReliableVal = undefined,
 	        pixelMarginRightVal = undefined,
 	        container = _constJs.document.createElement("div"),
 	        div = _constJs.document.createElement("div");
@@ -2723,7 +2720,7 @@
 	    }
 
 	    return ret;
-	};
+	}
 
 	function adjustCSS(elem, prop, valueParts) {
 	    var adjusted = undefined,
@@ -2764,7 +2761,7 @@
 	    }
 
 	    return view.getComputedStyle(elem);
-	};
+	}
 
 	function curCSS(elem, name, computed) {
 	    var width = undefined,
@@ -3046,7 +3043,7 @@
 	    }
 	});
 
-	;["height", "width"].forEach(function (name) {
+	["height", "width"].forEach(function (name) {
 	    _coreJs.leoDom.cssHooks[name] = {
 	        get: function get(elem, computed, extra) {
 	            if (computed) {
@@ -3576,7 +3573,7 @@
 	    }
 	});
 
-	;["radio", "checkbox"].forEach(function (name) {
+	["radio", "checkbox"].forEach(function (name) {
 	    _coreJs.leoDom.valHooks[name] = {
 	        set: function set(elem, value) {
 	            if (Array.isArray(value)) {
@@ -3766,6 +3763,11 @@
 	//     console.log(this, i, val);
 	//     return '100rem';
 	// });
+
+	var div = _domIndexJs2['default'].$tag('div');
+	var div2 = _domIndexJs2['default'].$qsa('div');
+
+	console.log(div2 instanceof window.NodeList);
 
 /***/ },
 /* 23 */
@@ -3977,7 +3979,7 @@
 
 	for (var _name in treeObj) {
 	    _loop(_name);
-	};
+	}
 
 	exports.leoDom = _coreJs.leoDom;
 

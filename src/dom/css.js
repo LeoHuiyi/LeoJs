@@ -40,7 +40,7 @@ const cssPrefixes = ["Webkit", "Moz", "ms"];
 const emptyStyle = document.createElement("div").style;
 
 (function() {
-    let pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal,
+    let boxSizingReliableVal, pixelMarginRightVal,
         container = document.createElement("div"),
         div = document.createElement("div");
 
@@ -121,7 +121,7 @@ function swap(elem, options, callback, args) {
     }
 
     return ret;
-};
+}
 
 function adjustCSS(elem, prop, valueParts) {
     let adjusted,
@@ -166,7 +166,7 @@ function getStyles(elem) {
     }
 
     return view.getComputedStyle(elem);
-};
+}
 
 function curCSS(elem, name, computed) {
     let width, minWidth, maxWidth, ret,
@@ -450,7 +450,7 @@ _leoDom.setApi(leoDom, {
     }
 });
 
-;["height", "width"].forEach((name) => {
+["height", "width"].forEach((name) => {
     leoDom.cssHooks[name] = {
         get(elem, computed, extra) {
             if (computed) {

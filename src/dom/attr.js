@@ -401,7 +401,7 @@ _leoDom.setApi(leoDom, {
     }
 });
 
-;["radio", "checkbox"].forEach((name) => {
+["radio", "checkbox"].forEach((name) => {
     leoDom.valHooks[name] = {
         set: function(elem, value) {
             if (Array.isArray(value)) {

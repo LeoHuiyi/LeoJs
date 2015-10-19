@@ -270,7 +270,7 @@
 	    }
 
 	    return _constJs.slice.call(context.querySelectorAll(selector));
-	};
+	}
 
 	function sortOrder(a, b) {
 	    if (a === b) {
@@ -297,7 +297,7 @@
 	    }
 
 	    return a.compareDocumentPosition ? -1 : 1;
-	};
+	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
 	    $id: function $id(id) {
@@ -1016,7 +1016,7 @@
 	function remove(element, events, fn, selector, capture) {
 	    var id = zid(element);
 
-	    ;(events || '').split(/\s/).forEach(function (event) {
+	    (events || '').split(/\s/).forEach(function (event) {
 	        findHandlers(element, event, fn, selector).forEach(function (handler) {
 	            delete handlers[id][handler.i];
 

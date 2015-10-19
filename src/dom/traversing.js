@@ -139,7 +139,7 @@ for (let name in treeObj) {
             return matched;
         }
     });
-};
+}
 
 export {
     leoDom

@@ -35,7 +35,7 @@ let isReady;
 let fireReady = function(fn) {
     isReady = true;
 
-    while (fn = readyList.shift()) {
+    while ((fn = readyList.shift())) {
         fn();
     }
 
@@ -67,7 +67,7 @@ function querySelector(selector, context = document) {
     }
 
     return slice.call(context.querySelectorAll(selector));
-};
+}
 
 function sortOrder(a, b) {
     if (a === b) {
@@ -96,7 +96,7 @@ function sortOrder(a, b) {
     }
 
     return a.compareDocumentPosition ? -1 : 1;
-};
+}
 
 _leoDom.setApi(leoDom, {
     $id(id, context = document) {
@@ -391,7 +391,7 @@ _leoDom.setApi(leoDom, {
             }
         }
 
-        return matched.length > 1 ? leoDom.uniqueSort(matched) : matched
+        return matched.length > 1 ? leoDom.uniqueSort(matched) : matched;
     }
 });
 

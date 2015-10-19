@@ -270,7 +270,7 @@
 	    }
 
 	    return _constJs.slice.call(context.querySelectorAll(selector));
-	};
+	}
 
 	function sortOrder(a, b) {
 	    if (a === b) {
@@ -297,7 +297,7 @@
 	    }
 
 	    return a.compareDocumentPosition ? -1 : 1;
-	};
+	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
 	    $id: function $id(id) {
@@ -952,8 +952,7 @@
 	var emptyStyle = _constJs.document.createElement("div").style;
 
 	(function () {
-	    var pixelPositionVal = undefined,
-	        boxSizingReliableVal = undefined,
+	    var boxSizingReliableVal = undefined,
 	        pixelMarginRightVal = undefined,
 	        container = _constJs.document.createElement("div"),
 	        div = _constJs.document.createElement("div");
@@ -1030,7 +1029,7 @@
 	    }
 
 	    return ret;
-	};
+	}
 
 	function adjustCSS(elem, prop, valueParts) {
 	    var adjusted = undefined,
@@ -1071,7 +1070,7 @@
 	    }
 
 	    return view.getComputedStyle(elem);
-	};
+	}
 
 	function curCSS(elem, name, computed) {
 	    var width = undefined,
@@ -1353,7 +1352,7 @@
 	    }
 	});
 
-	;["height", "width"].forEach(function (name) {
+	["height", "width"].forEach(function (name) {
 	    _coreJs.leoDom.cssHooks[name] = {
 	        get: function get(elem, computed, extra) {
 	            if (computed) {

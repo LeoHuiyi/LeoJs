@@ -270,7 +270,7 @@
 	    }
 
 	    return _constJs.slice.call(context.querySelectorAll(selector));
-	};
+	}
 
 	function sortOrder(a, b) {
 	    if (a === b) {
@@ -297,7 +297,7 @@
 	    }
 
 	    return a.compareDocumentPosition ? -1 : 1;
-	};
+	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
 	    $id: function $id(id) {
@@ -1087,7 +1087,7 @@
 	function remove(element, events, fn, selector, capture) {
 	    var id = zid(element);
 
-	    ;(events || '').split(/\s/).forEach(function (event) {
+	    (events || '').split(/\s/).forEach(function (event) {
 	        findHandlers(element, event, fn, selector).forEach(function (handler) {
 	            delete handlers[id][handler.i];
 
@@ -1376,8 +1376,7 @@
 	var emptyStyle = _constJs.document.createElement("div").style;
 
 	(function () {
-	    var pixelPositionVal = undefined,
-	        boxSizingReliableVal = undefined,
+	    var boxSizingReliableVal = undefined,
 	        pixelMarginRightVal = undefined,
 	        container = _constJs.document.createElement("div"),
 	        div = _constJs.document.createElement("div");
@@ -1454,7 +1453,7 @@
 	    }
 
 	    return ret;
-	};
+	}
 
 	function adjustCSS(elem, prop, valueParts) {
 	    var adjusted = undefined,
@@ -1495,7 +1494,7 @@
 	    }
 
 	    return view.getComputedStyle(elem);
-	};
+	}
 
 	function curCSS(elem, name, computed) {
 	    var width = undefined,
@@ -1777,7 +1776,7 @@
 	    }
 	});
 
-	;["height", "width"].forEach(function (name) {
+	["height", "width"].forEach(function (name) {
 	    _coreJs.leoDom.cssHooks[name] = {
 	        get: function get(elem, computed, extra) {
 	            if (computed) {
@@ -2307,7 +2306,7 @@
 	    }
 	});
 
-	;["radio", "checkbox"].forEach(function (name) {
+	["radio", "checkbox"].forEach(function (name) {
 	    _coreJs.leoDom.valHooks[name] = {
 	        set: function set(elem, value) {
 	            if (Array.isArray(value)) {
@@ -2993,7 +2992,7 @@
 
 	        basePosition = _offsetJs.leoDom.extend({}, targetOffset);
 
-	        ;["my", "at"].forEach(function (name) {
+	        ["my", "at"].forEach(function (name) {
 	            var pos = (options[name] || "").split(" "),
 	                horizontalOffset = undefined,
 	                verticalOffset = undefined;
@@ -3068,7 +3067,7 @@
 	                marginTop: marginTop
 	            };
 
-	            ;["left", "top"].forEach(function (dir, i) {
+	            ["left", "top"].forEach(function (dir, i) {
 	                if (_offsetJs.leoDom.positionCollision[collision[i]]) {
 	                    _offsetJs.leoDom.positionCollision[collision[i]][dir](position, {
 	                        targetWidth: targetWidth,

@@ -323,7 +323,7 @@ _leoDom.setApi(leoDom, {
     },
 
     $queue(selector, type, data) {
-        selector = leoDom.$(selector)
+        selector = leoDom.$(selector);
 
         let setter = 3;
 

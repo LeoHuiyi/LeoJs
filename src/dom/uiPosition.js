@@ -343,7 +343,7 @@ _leoDom.setApi(leoDom, {
 
         basePosition = leoDom.extend({}, targetOffset);
 
-        ;["my", "at"].forEach((name) => {
+        ["my", "at"].forEach((name) => {
             let pos = (options[name] || "").split(" "),
                 horizontalOffset,
                 verticalOffset;
@@ -427,7 +427,7 @@ _leoDom.setApi(leoDom, {
                 marginTop: marginTop
             };
 
-            ;["left", "top"].forEach((dir, i) => {
+            ["left", "top"].forEach((dir, i) => {
                 if (leoDom.positionCollision[collision[i]]) {
                     leoDom.positionCollision[collision[i]][dir](position, {
                         targetWidth: targetWidth,

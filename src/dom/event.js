@@ -23,7 +23,7 @@ from "./const.js";
 let _zid = 1,
     isFunction = leoDom.isFunction,
     isString = function(obj) {
-        return typeof obj == 'string'
+        return typeof obj == 'string';
     },
     handlers = {},
     specialEvents = {},
@@ -40,7 +40,7 @@ let _zid = 1,
 specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
 
 function zid(element) {
-    return element._zid || (element._zid = _zid++)
+    return element._zid || (element._zid = _zid++);
 }
 
 function findHandlers(element, event, fn, selector) {
@@ -49,7 +49,7 @@ function findHandlers(element, event, fn, selector) {
     let matcher;
 
     if (event.ns) {
-        matcher = matcherFor(event.ns)
+        matcher = matcherFor(event.ns);
     }
 
     return (handlers[zid(element)] || []).filter(function(handler) {
@@ -123,7 +123,7 @@ function add(element, events, fn, data, selector, delegator, capture) {
             }
 
             return result;
-        }
+        };
 
         handler.i = set.length;
         set.push(handler);
@@ -137,7 +137,7 @@ function add(element, events, fn, data, selector, delegator, capture) {
 function remove(element, events, fn, selector, capture) {
     let id = zid(element);
 
-    ;(events || '').split(/\s/).forEach(function(event) {
+    (events || '').split(/\s/).forEach(function(event) {
         findHandlers(element, event, fn, selector).forEach(function(handler) {
             delete handlers[id][handler.i];
 
@@ -149,10 +149,10 @@ function remove(element, events, fn, selector, capture) {
 }
 
 const returnTrue = function() {
-        return true
+        return true;
     },
     returnFalse = function() {
-        return false
+        return false;
     },
     ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$)/,
     eventMethods = {
@@ -173,7 +173,7 @@ function compatible(event, source) {
                 this[predicate] = returnTrue;
 
                 return sourceMethod && sourceMethod.apply(source, arguments);
-            }
+            };
 
             event[predicate] = returnFalse;
         }
@@ -228,7 +228,7 @@ _leoDom.setApi(leoDom, {
                 return leoDom.proxy(fn[context], fn);
             }
         } else {
-            throw new TypeError("expected function")
+            throw new TypeError("expected function");
         }
     },
 
@@ -265,7 +265,7 @@ _leoDom.setApi(leoDom, {
                 autoRemove = function(e) {
                     remove(element, e.type, callback);
                     return callback.apply(this, arguments);
-                }
+                };
             }
 
             if (selector) {
@@ -280,7 +280,7 @@ _leoDom.setApi(leoDom, {
 
                         return (autoRemove || callback).apply(match, [evt].concat(slice.call(arguments, 1)));
                     }
-                }
+                };
             }
 
             add(element, event, callback, data, selector, delegator || autoRemove);
@@ -347,7 +347,7 @@ _leoDom.setApi(leoDom, {
             });
         });
 
-        return result
+        return result;
     },
 
     Event(type, props) {

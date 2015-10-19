@@ -8,7 +8,7 @@
 */
 
 import {
-    document, documentElement, arr, slice
+    document, arr
 }
 from "./const.js";
 
@@ -167,7 +167,7 @@ leoDom.isNode = function(node) {
 };
 
 leoDom.isXMLDoc = function(elem) {
-    var documentElement = elem && (elem.ownerDocument || elem).documentElement;
+    let documentElement = elem && (elem.ownerDocument || elem).documentElement;
     return documentElement ? documentElement.nodeName !== "HTML" : false;
 };
 
@@ -241,7 +241,7 @@ leoDom.each = function(obj, callback) {
     }
 
     return obj;
-}
+};
 
 export {
     leoDom

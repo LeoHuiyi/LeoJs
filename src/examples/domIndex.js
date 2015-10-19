@@ -158,3 +158,8 @@ leoDom.$on(document, 'click', 'a', function(event) {
 //     console.log(this, i, val);
 //     return '100rem';
 // });
+
+let div = leoDom.$tag('div');
+let div2 = leoDom.$qsa('div');
+
+console.log(div2 instanceof window.NodeList);

@@ -17,10 +17,6 @@ import {
     leoDom
 }
 from "./css.js";
-import {
-    rnotwhite
-}
-from "./const.js";
 
 _leoDom.setApi(leoDom, {
     animateSpeeds: {
@@ -185,7 +181,7 @@ function registerCssHook(prop, isPixels) {
         },
 
         set(elem, value) {
-            let t = leoDom.$css(elem, 'transit:transform');;
+            let t = leoDom.$css(elem, 'transit:transform');
             t.setFromString(prop, value);
 
             leoDom.$css(elem, {

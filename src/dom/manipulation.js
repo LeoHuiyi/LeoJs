@@ -83,7 +83,7 @@ function domManip(targets, arg, callback) {
             });
         }
     }
-};
+}
 
 function getAll(context, tag) {
     let ret = typeof context.getElementsByTagName !== "undefined" ?
