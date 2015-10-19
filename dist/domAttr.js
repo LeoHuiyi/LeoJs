@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(16);
+	module.exports = __webpack_require__(17);
 
 
 /***/ },
@@ -877,12 +877,13 @@
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _domAttrJs = __webpack_require__(17);
+	var _domAttrJs = __webpack_require__(18);
 
 	// console.log(leoDom.$prop('input', 'checked'));
 	// console.log($('input').prop('checked'));
@@ -987,7 +988,7 @@
 	// $("p:last").addClass("selected highlight");
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

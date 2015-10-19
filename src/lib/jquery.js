@@ -6286,7 +6286,6 @@
                 // If a hook was provided, use that value, otherwise just set the specified value
                 if (!hooks || !("set" in hooks) ||
                     (value = hooks.set(elem, value, extra)) !== undefined) {
-
                     style[name] = value;
                 }
 

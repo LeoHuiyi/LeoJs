@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(19);
+	module.exports = __webpack_require__(20);
 
 
 /***/ },
@@ -905,7 +905,8 @@
 
 /***/ },
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -919,7 +920,7 @@
 
 	"use strict";
 
-	var _defineProperty = __webpack_require__(15)["default"];
+	var _defineProperty = __webpack_require__(16)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -1438,7 +1439,7 @@
 	exports.leoDom = _coreJs.leoDom;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1463,15 +1464,15 @@
 	exports.__esModule = true;
 
 /***/ },
-/* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _domCssJs = __webpack_require__(14);
+	var _domCssJs = __webpack_require__(15);
 
 	// console.log(leoDom.$css('div', "background-color"), leoDom.$css('div', ["background-color", 'width']))
 	// console.log($('div').css("background-color"), leoDom.$css('div', ["background-color", 'width']));

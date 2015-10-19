@@ -2,7 +2,7 @@
 * text=auto
 
 # Custom for Visual Studio
-*.cs     diff=csharp
+*.cs     diff v  =csharp
 
 # Standard to msysgit
 *.doc	 diff=astextplain
@@ -15,3 +15,4 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
