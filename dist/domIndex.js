@@ -1091,7 +1091,11 @@
 	};
 
 	leoDom.isNode = function (node) {
-	    return !!(node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11));
+	    return !!(node && node.nodeName);
+	};
+
+	leoDom.isNodeList = function (variable) {
+	    return typeof variable === "object" && /^\[object (HTMLCollection|NodeList|Object)\]$/.test(Object.prototype.toString.call(variable)) && variable.length !== undefined && (variable.length === 0 || typeof variable[0] === "object" && variable[0].nodeType > 0);
 	};
 
 	leoDom.isXMLDoc = function (elem) {
@@ -3765,9 +3769,20 @@
 	// });
 
 	var div = _domIndexJs2['default'].$tag('div');
-	var div2 = _domIndexJs2['default'].$qsa('div');
+	var div1 = _domIndexJs2['default'].$qsa('div');
 
-	console.log(div2 instanceof window.NodeList);
+	var i = _domIndexJs2['default'].$tag('input');
+	var i1 = _domIndexJs2['default'].$qsa('input');
+
+	var result = _domIndexJs2['default'].$id('result');
+
+	console.log(div, _domIndexJs2['default'].isNodeList(div), div1, _domIndexJs2['default'].isNodeList(div1));
+
+	console.log(i, _domIndexJs2['default'].isNodeList(i), i1, _domIndexJs2['default'].isNodeList(i1));
+
+	console.log(_domIndexJs2['default'].isNodeList(result));
+
+	console.log(i1 instanceof window.NodeList);
 
 /***/ },
 /* 23 */

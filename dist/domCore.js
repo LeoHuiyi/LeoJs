@@ -791,7 +791,11 @@
 	};
 
 	leoDom.isNode = function (node) {
-	    return !!(node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11));
+	    return !!(node && node.nodeName);
+	};
+
+	leoDom.isNodeList = function (variable) {
+	    return typeof variable === "object" && /^\[object (HTMLCollection|NodeList|Object)\]$/.test(Object.prototype.toString.call(variable)) && variable.length !== undefined && (variable.length === 0 || typeof variable[0] === "object" && variable[0].nodeType > 0);
 	};
 
 	leoDom.isXMLDoc = function (elem) {
@@ -875,46 +879,49 @@
 /***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _domCoreJs = __webpack_require__(5);
 
 	_domCoreJs.leoDom.ready(function () {
-	    // let iframeDoc = leoDom.$('#iframe')[0].contentWindow.document;
-	    // console.log(leoDom.$('input[type=button]'));
-	    // console.log(leoDom.$id('div'));
-	    // console.log(leoDom.$tag('span'));
-	    // console.log(leoDom.$class('class'));
-	    // console.log(leoDom.$qs('input[type=button]'));
-	    // console.log(leoDom.$qsa('input[name=leotc]'));
-	    // console.log(leoDom.$newHtml('<div id="new"><table></table></div>'));
-	    // console.log(leoDom.$('<div id="new"><table></table></div>'));
-	    // console.log(iframeDoc);
-	    // console.log($('body', iframeDoc));
-	    // console.log(leoDom.$('body', iframeDoc));
-	    // console.log(leoDom.$({selector: 'body', context: iframeDoc}));
-	    // console.log(leoDom.$is({selector: 'body', context: iframeDoc}, '.leo'));
-	    // console.log(leoDom.$is('#div', 'div'))
-	    // console.log(leoDom.$filter('.leo', 'span'))
-	    // console.log(leoDom.$not('.leo', 'span'))
-	    // console.log(leoDom.$find('.leo', 'span'))
-	    // console.log(leoDom.$add('.leo', 'span'))
-	    // console.log($('.leo').add('span'))
-	    // console.log($('<div>', document.getElementsByTagName('span')))
-	    // console.log(leoDom.$('<div>', 'span'))
-	    // console.log(leoDom.$has('.leo', 'span'))
-	    // console.log($('.leo').has('span'))
-	    // console.log(leoDom.$('.leo', '[name=only]'))
-	    // console.log($('.leo', '[name=only]'))
-	    // console.log(leoDom.$closest('.item-1', '.item-ii', document.getElementById('ul')))
-	    // console.log($('.item-1').closest('.item-ii', document.getElementById('ul')))
+	    var iframeDoc = _domCoreJs.leoDom.$('#iframe')[0].contentWindow.document;
+	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$tag('span')), $(_domCoreJs.leoDom.$tag('span')));
+	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$qsa('span')), $(_domCoreJs.leoDom.$qsa('span')));
+	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$qsa('abc')), $(_domCoreJs.leoDom.$qsa('sdfsd')));
+	    console.log(_domCoreJs.leoDom.$('input[type=button]'));
+	    console.log(_domCoreJs.leoDom.$id('div'));
+	    console.log(_domCoreJs.leoDom.$tag('span'));
+	    console.log(_domCoreJs.leoDom.$class('class'));
+	    console.log(_domCoreJs.leoDom.$qs('input[type=button]'));
+	    console.log(_domCoreJs.leoDom.$qsa('input[name=leotc]'));
+	    console.log(_domCoreJs.leoDom.$newHtml('<div id="new"><table></table></div>'));
+	    console.log(_domCoreJs.leoDom.$('<div id="new"><table></table></div>'));
+	    console.log(iframeDoc);
+	    console.log($('body', iframeDoc));
+	    console.log(_domCoreJs.leoDom.$('body', iframeDoc));
+	    console.log(_domCoreJs.leoDom.$({ selector: 'body', context: iframeDoc }));
+	    console.log(_domCoreJs.leoDom.$is({ selector: 'body', context: iframeDoc }, '.leo'));
+	    console.log(_domCoreJs.leoDom.$is('#div', 'div'));
+	    console.log(_domCoreJs.leoDom.$filter('.leo', 'span'));
+	    console.log(_domCoreJs.leoDom.$not('.leo', 'span'));
+	    console.log(_domCoreJs.leoDom.$find('.leo', 'span'));
+	    console.log(_domCoreJs.leoDom.$add('.leo', 'span'));
+	    console.log($('.leo').add('span'));
+	    console.log($('<div>', document.getElementsByTagName('span')));
+	    console.log(_domCoreJs.leoDom.$('<div>', 'span'));
+	    console.log(_domCoreJs.leoDom.$has('.leo', 'span'));
+	    console.log($('.leo').has('span'));
+	    console.log(_domCoreJs.leoDom.$('.leo', '[name=only]'));
+	    console.log($('.leo', '[name=only]'));
+	    console.log(_domCoreJs.leoDom.$closest('.item-1', '.item-ii', document.getElementById('ul')));
+	    console.log($('.item-1').closest('.item-ii', document.getElementById('ul')));
 	});
 
-	// leoDom.ready(function(){
-	//     console.log(leoDom.$id('div'));
-	// });
+	_domCoreJs.leoDom.ready(function () {
+	    console.log(_domCoreJs.leoDom.$id('div'));
+	});
 
-	// console.log(leoDom.$('#div'));
+	console.log(_domCoreJs.leoDom.$('#div'));
 
 /***/ }
 

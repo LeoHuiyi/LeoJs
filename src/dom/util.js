@@ -163,7 +163,11 @@ leoDom.isWindow = function(obj) {
 };
 
 leoDom.isNode = function(node) {
-    return !!(node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11));
+    return !!(node && node.nodeName);
+};
+
+leoDom.isNodeList = function(variable) {
+    return typeof variable === "object" && /^\[object (HTMLCollection|NodeList|Object)\]$/.test(Object.prototype.toString.call(variable)) && variable.length !== undefined && (variable.length === 0 || (typeof variable[0] === "object" && variable[0].nodeType > 0));
 };
 
 leoDom.isXMLDoc = function(elem) {

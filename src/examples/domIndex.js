@@ -160,6 +160,17 @@ leoDom.$on(document, 'click', 'a', function(event) {
 // });
 
 let div = leoDom.$tag('div');
-let div2 = leoDom.$qsa('div');
+let div1 = leoDom.$qsa('div');
 
-console.log(div2 instanceof window.NodeList);
+let i = leoDom.$tag('input');
+let i1 = leoDom.$qsa('input');
+
+let result = leoDom.$id('result');
+
+console.log(div, leoDom.isNodeList(div), div1, leoDom.isNodeList(div1));
+
+console.log(i, leoDom.isNodeList(i), i1, leoDom.isNodeList(i1));
+
+console.log(leoDom.isNodeList(result));
+
+console.log(i1 instanceof window.NodeList);
