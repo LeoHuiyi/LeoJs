@@ -4,7 +4,7 @@ leoDom.ready(function(){
     let iframeDoc = leoDom.$('#iframe')[0].contentWindow.document;
     console.log(leoDom.$(leoDom.$tag('span')), $(leoDom.$tag('span')))
     console.log(leoDom.$(leoDom.$qsa('span')), $(leoDom.$qsa('span')))
-    console.log(leoDom.$(leoDom.$qsa('abc')), $(leoDom.$qsa('sdfsd')))
+    console.log(leoDom.$(leoDom.$qsa('abc')), $(leoDom.$qsa('abc')))
     console.log(leoDom.$('input[type=button]'));
     console.log(leoDom.$id('div'));
     console.log(leoDom.$tag('span'));

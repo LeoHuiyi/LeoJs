@@ -16,7 +16,7 @@ import {
 }
 from "./util.js";
 import {
-    document, documentElement, slice
+    document, documentElement, slice, indexOf
 }
 from "./const.js";
 
@@ -30,6 +30,9 @@ const matches = documentElement.matches ||
     documentElement.msMatchesSelector;
 
 let hasDuplicate;
+let sortInput;
+let leoRandom = leoDom.generateId('leoRandom');
+let sortStable = leoRandom.split("").sort(sortOrder).join("") === leoRandom;
 let readyList = [];
 let isReady;
 let fireReady = function(fn) {
@@ -43,8 +46,8 @@ let fireReady = function(fn) {
     window.removeEventListener("load", fireReady);
 };
 
-if (document.readyState === "complete") {
-    setTimeout(fireReady);
+if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+    window.setTimeout(fireReady);
 } else {
     document.addEventListener("DOMContentLoaded", fireReady);
 }
@@ -75,27 +78,27 @@ function sortOrder(a, b) {
         return 0;
     }
 
-    let compare = b.compareDocumentPosition &&
-        a.compareDocumentPosition &&
-        a.compareDocumentPosition(b);
-
+    let compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
     if (compare) {
-        if (compare & 1) {
-            if (a === document || leoDom.contains(document, a)) {
-                return -1;
-            }
-
-            if (b === document || leoDom.contains(document, b)) {
-                return 1;
-            }
-
-            return 0;
-        }
-
-        return compare & 4 ? -1 : 1;
+        return compare;
     }
 
-    return a.compareDocumentPosition ? -1 : 1;
+    compare = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1;
+
+    if (compare & 1) {
+        if (a === document || a.ownerDocument === document &&
+            leoDom.contains(document, a)) {
+            return -1;
+        }
+        if (b === document || b.ownerDocument === document &&
+            leoDom.contains(document, b)) {
+            return 1;
+        }
+
+        return sortInput ? (indexOf.call(sortInput, a) - indexOf.call(sortInput, b)) : 0;
+    }
+
+    return compare & 4 ? -1 : 1;
 }
 
 _leoDom.setApi(leoDom, {
@@ -228,10 +231,11 @@ _leoDom.setApi(leoDom, {
     uniqueSort(results) {
         let elem,
             duplicates = [],
-            i = 0,
-            j = 0;
+            j = 0,
+            i = 0;
 
         hasDuplicate = false;
+        sortInput = !sortStable && results.slice(0);
         results.sort(sortOrder);
 
         if (hasDuplicate) {
@@ -240,11 +244,12 @@ _leoDom.setApi(leoDom, {
                     j = duplicates.push(i);
                 }
             }
-
             while (j--) {
                 results.splice(duplicates[j], 1);
             }
         }
+
+        sortInput = null;
 
         return results;
     },

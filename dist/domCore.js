@@ -193,6 +193,7 @@
 	var slice = arr.slice;
 	var concat = arr.concat;
 	var rnotwhite = /\S+/g;
+	var indexOf = arr.indexOf;
 
 	exports.document = document;
 	exports.documentElement = documentElement;
@@ -200,6 +201,7 @@
 	exports.slice = slice;
 	exports.concat = concat;
 	exports.rnotwhite = rnotwhite;
+	exports.indexOf = indexOf;
 
 /***/ },
 
@@ -233,6 +235,9 @@
 	var matches = _constJs.documentElement.matches || _constJs.documentElement.webkitMatchesSelector || _constJs.documentElement.mozMatchesSelector || _constJs.documentElement.oMatchesSelector || _constJs.documentElement.msMatchesSelector;
 
 	var hasDuplicate = undefined;
+	var sortInput = undefined;
+	var leoRandom = _utilJs.leoDom.generateId('leoRandom');
+	var sortStable = leoRandom.split("").sort(sortOrder).join("") === leoRandom;
 	var readyList = [];
 	var isReady = undefined;
 	var fireReady = function fireReady(fn) {
@@ -246,8 +251,8 @@
 	    window.removeEventListener("load", fireReady);
 	};
 
-	if (_constJs.document.readyState === "complete") {
-	    setTimeout(fireReady);
+	if (_constJs.document.readyState === "complete" || _constJs.document.readyState !== "loading" && !_constJs.document.documentElement.doScroll) {
+	    window.setTimeout(fireReady);
 	} else {
 	    _constJs.document.addEventListener("DOMContentLoaded", fireReady);
 	}
@@ -280,25 +285,25 @@
 	        return 0;
 	    }
 
-	    var compare = b.compareDocumentPosition && a.compareDocumentPosition && a.compareDocumentPosition(b);
-
+	    var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
 	    if (compare) {
-	        if (compare & 1) {
-	            if (a === _constJs.document || _utilJs.leoDom.contains(_constJs.document, a)) {
-	                return -1;
-	            }
-
-	            if (b === _constJs.document || _utilJs.leoDom.contains(_constJs.document, b)) {
-	                return 1;
-	            }
-
-	            return 0;
-	        }
-
-	        return compare & 4 ? -1 : 1;
+	        return compare;
 	    }
 
-	    return a.compareDocumentPosition ? -1 : 1;
+	    compare = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1;
+
+	    if (compare & 1) {
+	        if (a === _constJs.document || a.ownerDocument === _constJs.document && _utilJs.leoDom.contains(_constJs.document, a)) {
+	            return -1;
+	        }
+	        if (b === _constJs.document || b.ownerDocument === _constJs.document && _utilJs.leoDom.contains(_constJs.document, b)) {
+	            return 1;
+	        }
+
+	        return sortInput ? _constJs.indexOf.call(sortInput, a) - _constJs.indexOf.call(sortInput, b) : 0;
+	    }
+
+	    return compare & 4 ? -1 : 1;
 	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
@@ -442,10 +447,11 @@
 	    uniqueSort: function uniqueSort(results) {
 	        var elem = undefined,
 	            duplicates = [],
-	            i = 0,
-	            j = 0;
+	            j = 0,
+	            i = 0;
 
 	        hasDuplicate = false;
+	        sortInput = !sortStable && results.slice(0);
 	        results.sort(sortOrder);
 
 	        if (hasDuplicate) {
@@ -454,11 +460,12 @@
 	                    j = duplicates.push(i);
 	                }
 	            }
-
 	            while (j--) {
 	                results.splice(duplicates[j], 1);
 	            }
 	        }
+
+	        sortInput = null;
 
 	        return results;
 	    },
@@ -636,7 +643,6 @@
 	var toString = class2type.toString;
 	var hasOwn = class2type.hasOwnProperty;
 	var rgenerateId = /\d\.\d{4}/;
-	var indexOf = _constJs.arr.indexOf;
 
 	"Boolean Number String Function Array Date RegExp Object Error".replace(/[^, ]+/g, function (name) {
 	    class2type["[object " + name + "]"] = name.toLowerCase();
@@ -649,7 +655,7 @@
 	};
 
 	leoDom.inArray = function (elem, arr, i) {
-	    return arr == null ? -1 : indexOf.call(arr, elem, i);
+	    return arr == null ? -1 : _constJs.indexOf.call(arr, elem, i);
 	};
 
 	leoDom.isNumeric = function (obj) {
@@ -887,7 +893,7 @@
 	    var iframeDoc = _domCoreJs.leoDom.$('#iframe')[0].contentWindow.document;
 	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$tag('span')), $(_domCoreJs.leoDom.$tag('span')));
 	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$qsa('span')), $(_domCoreJs.leoDom.$qsa('span')));
-	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$qsa('abc')), $(_domCoreJs.leoDom.$qsa('sdfsd')));
+	    console.log(_domCoreJs.leoDom.$(_domCoreJs.leoDom.$qsa('abc')), $(_domCoreJs.leoDom.$qsa('abc')));
 	    console.log(_domCoreJs.leoDom.$('input[type=button]'));
 	    console.log(_domCoreJs.leoDom.$id('div'));
 	    console.log(_domCoreJs.leoDom.$tag('span'));

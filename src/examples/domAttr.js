@@ -106,3 +106,11 @@ from "../dom/attr.js";
 // });
 // console.log(leoDom.$hasClass('p:last-of-type','selected highlight'));
 // $("p:last").addClass("selected highlight");
+
+
+// $('#btn').on('click', function(event) {
+//     event.preventDefault();
+//     // $('p').toggleClass("selected highlight");
+//     leoDom.$toggleClass('p', "selected highlight");
+// });
+

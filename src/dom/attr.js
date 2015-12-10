@@ -223,10 +223,6 @@ _leoDom.setApi(leoDom, {
     $toggleClass(selector, value, stateVal) {
         let type = typeof value;
 
-        if (typeof stateVal === "boolean" && type === "string") {
-            return stateVal ? leoDom.$addClass(selector, value) : leoDom.$removeClass(selector, value);
-        }
-
         selector = leoDom.$(selector);
 
         if (leoDom.isFunction(value)) {
@@ -244,7 +240,7 @@ _leoDom.setApi(leoDom, {
                     classNames = value.match(rnotwhite) || [];
 
                 while ((className = classNames[i++])) {
-                    if (leoDom.$hasClass(node, className)) {
+                    if (stateVal === false || stateVal !== true && leoDom.$hasClass(node, className)) {
                         leoDom.$removeClass(node, className);
                     } else {
                         leoDom.$addClass(node, className);
@@ -278,8 +274,6 @@ _leoDom.setApi(leoDom, {
 
     input.type = "checkbox";
     support.checkOn = input.value !== "";
-    select.disabled = true;
-    support.optDisabled = !opt.disabled;
 })();
 
 const rreturn = /\r/g;
@@ -296,17 +290,14 @@ _leoDom.setApi(leoDom, {
                 let value, option,
                     options = elem.options,
                     index = elem.selectedIndex,
-                    one = elem.type === "select-one" || index < 0,
+                    one = elem.type === "select-one",
                     values = one ? null : [],
                     max = one ? index + 1 : options.length,
                     i = index < 0 ? max : one ? index : 0;
 
                 for (; i < max; i++) {
                     option = options[i];
-                    if ((option.selected || i === index) && (support.optDisabled ?
-                            !option.disabled : option.getAttribute("disabled") === null) &&
-                        (!option.parentNode.disabled ||
-                            !leoDom.nodeName(option.parentNode, "optgroup"))) {
+                    if ((option.selected || i === index) && !option.disabled && (!option.parentNode.disabled || !leoDom.nodeName(option.parentNode, "optgroup"))) {
 
                         value = leoDom.$val(option);
 

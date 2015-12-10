@@ -13,7 +13,8 @@ const arr = [];
 const slice = arr.slice;
 const concat = arr.concat;
 const rnotwhite = (/\S+/g);
+const indexOf = arr.indexOf;
 
 export {
-    document, documentElement, arr, slice, concat, rnotwhite
+    document, documentElement, arr, slice, concat, rnotwhite, indexOf
 };

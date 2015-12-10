@@ -8,7 +8,7 @@
 */
 
 import {
-    document, arr
+    document, arr, indexOf
 }
 from "./const.js";
 
@@ -17,7 +17,6 @@ const class2type = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
 const rgenerateId = /\d\.\d{4}/;
-const indexOf = arr.indexOf;
 
 "Boolean Number String Function Array Date RegExp Object Error".replace(/[^, ]+/g, function(name) {
     class2type["[object " + name + "]"] = name.toLowerCase();

@@ -26,7 +26,6 @@ const rcssNum = new RegExp("^(?:([+-])=|)(" + pnum + ")([a-z%]*)$", "i");
 const rmargin = (/^margin/);
 const cssExpand = ["Top", "Right", "Bottom", "Left"];
 const rdisplayswap = /^(none|table(?!-c[ea]).+)/;
-const rnumsplit = new RegExp("^(" + pnum + ")(.*)$", "i");
 const cssShow = {
     position: "absolute",
     visibility: "hidden",
@@ -40,7 +39,7 @@ const cssPrefixes = ["Webkit", "Moz", "ms"];
 const emptyStyle = document.createElement("div").style;
 
 (function() {
-    let boxSizingReliableVal, pixelMarginRightVal,
+    let boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal,
         container = document.createElement("div"),
         div = document.createElement("div");
 
@@ -57,16 +56,21 @@ const emptyStyle = document.createElement("div").style;
     container.appendChild(div);
 
     function computeStyleTests() {
-        div.style.cssText = "-webkit-box-sizing:border-box;box-sizing:border-box;" +
-            "display:block;position:absolute;" +
-            "margin:0;margin-top:1%;margin-right:50%;" +
-            "border:1px;padding:1px;" +
-            "top:1%;width:50%;height:4px";
+        div.style.cssText =
+            "box-sizing:border-box;" +
+            "position:relative;display:block;" +
+            "margin:auto;border:1px;padding:1px;" +
+            "top:1%;width:50%";
         div.innerHTML = "";
         documentElement.appendChild(container);
 
         let divStyle = window.getComputedStyle(div);
-        boxSizingReliableVal = divStyle.height === "4px";
+        reliableMarginLeftVal = divStyle.marginLeft === "2px";
+        boxSizingReliableVal = divStyle.width === "4px";
+
+        // Support: Android 4.0 - 4.3 only
+        // Some styles come back with percentage values, even though they shouldn't
+        div.style.marginRight = "50%";
         pixelMarginRightVal = divStyle.marginRight === "4px";
 
         documentElement.removeChild(container);
@@ -85,22 +89,11 @@ const emptyStyle = document.createElement("div").style;
             }
             return pixelMarginRightVal;
         },
-        reliableMarginRight: function() {
-            let ret,
-                marginDiv = div.appendChild(document.createElement("div"));
-
-            marginDiv.style.cssText = div.style.cssText = "-webkit-box-sizing:content-box;box-sizing:content-box;" +
-                "display:block;margin:0;border:0;padding:0";
-            marginDiv.style.marginRight = marginDiv.style.width = "0";
-            div.style.width = "1px";
-            documentElement.appendChild(container);
-
-            ret = !parseFloat(window.getComputedStyle(marginDiv).marginRight);
-
-            documentElement.removeChild(container);
-            div.removeChild(marginDiv);
-
-            return ret;
+        reliableMarginLeft: function() {
+            if (boxSizingReliableVal == null) {
+                computeStyleTests();
+            }
+            return reliableMarginLeftVal;
         }
     });
 })();
@@ -217,7 +210,7 @@ function vendorPropName(name) {
         return name;
     }
 
-    var capName = name[0].toUpperCase() + name.slice(1),
+    let capName = name[0].toUpperCase() + name.slice(1),
         i = cssPrefixes.length;
 
     while (i--) {
@@ -229,9 +222,9 @@ function vendorPropName(name) {
 }
 
 function setPositiveNumber(elem, value, subtract) {
-    let matches = rnumsplit.exec(value);
+    let matches = rcssNum.exec(value);
 
-    return matches ? Math.max(0, matches[1] - (subtract || 0)) + (matches[2] || "px") : value;
+    return matches ? Math.max(0, matches[2] - (subtract || 0)) + (matches[3] || "px") : value;
 }
 
 function augmentWidthOrHeight(elem, name, extra, isBorderBox, styles) {
@@ -463,27 +456,38 @@ _leoDom.setApi(leoDom, {
         },
 
         set(elem, value, extra) {
-            var styles = extra && getStyles(elem);
-            return setPositiveNumber(elem, value, extra ?
-                augmentWidthOrHeight(
+            let matches, styles = extra && getStyles(elem),
+                subtract = extra && augmentWidthOrHeight(
                     elem,
                     name,
                     extra,
                     leoDom.css(elem, "boxSizing", false, styles) === "border-box",
                     styles
-                ) : 0
-            );
+                );
+
+            if (subtract && (matches = rcssNum.exec(value)) &&
+                (matches[3] || "px") !== "px") {
+
+                elem.style[name] = value;
+                value = leoDom.css(elem, name);
+            }
+
+            return setPositiveNumber(elem, value, subtract);
         }
     };
 });
 
-leoDom.cssHooks.marginRight = addGetHookIf(support.reliableMarginRight,
+leoDom.cssHooks.marginLeft = addGetHookIf(support.reliableMarginLeft,
     function(elem, computed) {
         if (computed) {
-            return swap(elem, {
-                    "display": "inline-block"
-                },
-            curCSS, [elem, "marginRight"]);
+            return (parseFloat(curCSS(elem, "marginLeft")) ||
+                elem.getBoundingClientRect().left -
+                swap(elem, {
+                    marginLeft: 0
+                }, function() {
+                    return elem.getBoundingClientRect().left;
+                })
+            ) + "px";
         }
     }
 );

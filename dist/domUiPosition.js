@@ -192,6 +192,7 @@
 	var slice = arr.slice;
 	var concat = arr.concat;
 	var rnotwhite = /\S+/g;
+	var indexOf = arr.indexOf;
 
 	exports.document = document;
 	exports.documentElement = documentElement;
@@ -199,6 +200,7 @@
 	exports.slice = slice;
 	exports.concat = concat;
 	exports.rnotwhite = rnotwhite;
+	exports.indexOf = indexOf;
 
 /***/ },
 /* 5 */
@@ -231,6 +233,9 @@
 	var matches = _constJs.documentElement.matches || _constJs.documentElement.webkitMatchesSelector || _constJs.documentElement.mozMatchesSelector || _constJs.documentElement.oMatchesSelector || _constJs.documentElement.msMatchesSelector;
 
 	var hasDuplicate = undefined;
+	var sortInput = undefined;
+	var leoRandom = _utilJs.leoDom.generateId('leoRandom');
+	var sortStable = leoRandom.split("").sort(sortOrder).join("") === leoRandom;
 	var readyList = [];
 	var isReady = undefined;
 	var fireReady = function fireReady(fn) {
@@ -244,8 +249,8 @@
 	    window.removeEventListener("load", fireReady);
 	};
 
-	if (_constJs.document.readyState === "complete") {
-	    setTimeout(fireReady);
+	if (_constJs.document.readyState === "complete" || _constJs.document.readyState !== "loading" && !_constJs.document.documentElement.doScroll) {
+	    window.setTimeout(fireReady);
 	} else {
 	    _constJs.document.addEventListener("DOMContentLoaded", fireReady);
 	}
@@ -278,25 +283,25 @@
 	        return 0;
 	    }
 
-	    var compare = b.compareDocumentPosition && a.compareDocumentPosition && a.compareDocumentPosition(b);
-
+	    var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
 	    if (compare) {
-	        if (compare & 1) {
-	            if (a === _constJs.document || _utilJs.leoDom.contains(_constJs.document, a)) {
-	                return -1;
-	            }
-
-	            if (b === _constJs.document || _utilJs.leoDom.contains(_constJs.document, b)) {
-	                return 1;
-	            }
-
-	            return 0;
-	        }
-
-	        return compare & 4 ? -1 : 1;
+	        return compare;
 	    }
 
-	    return a.compareDocumentPosition ? -1 : 1;
+	    compare = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1;
+
+	    if (compare & 1) {
+	        if (a === _constJs.document || a.ownerDocument === _constJs.document && _utilJs.leoDom.contains(_constJs.document, a)) {
+	            return -1;
+	        }
+	        if (b === _constJs.document || b.ownerDocument === _constJs.document && _utilJs.leoDom.contains(_constJs.document, b)) {
+	            return 1;
+	        }
+
+	        return sortInput ? _constJs.indexOf.call(sortInput, a) - _constJs.indexOf.call(sortInput, b) : 0;
+	    }
+
+	    return compare & 4 ? -1 : 1;
 	}
 
 	_privateJs._leoDom.setApi(_utilJs.leoDom, {
@@ -440,10 +445,11 @@
 	    uniqueSort: function uniqueSort(results) {
 	        var elem = undefined,
 	            duplicates = [],
-	            i = 0,
-	            j = 0;
+	            j = 0,
+	            i = 0;
 
 	        hasDuplicate = false;
+	        sortInput = !sortStable && results.slice(0);
 	        results.sort(sortOrder);
 
 	        if (hasDuplicate) {
@@ -452,11 +458,12 @@
 	                    j = duplicates.push(i);
 	                }
 	            }
-
 	            while (j--) {
 	                results.splice(duplicates[j], 1);
 	            }
 	        }
+
+	        sortInput = null;
 
 	        return results;
 	    },
@@ -633,7 +640,6 @@
 	var toString = class2type.toString;
 	var hasOwn = class2type.hasOwnProperty;
 	var rgenerateId = /\d\.\d{4}/;
-	var indexOf = _constJs.arr.indexOf;
 
 	"Boolean Number String Function Array Date RegExp Object Error".replace(/[^, ]+/g, function (name) {
 	    class2type["[object " + name + "]"] = name.toLowerCase();
@@ -646,7 +652,7 @@
 	};
 
 	leoDom.inArray = function (elem, arr, i) {
-	    return arr == null ? -1 : indexOf.call(arr, elem, i);
+	    return arr == null ? -1 : _constJs.indexOf.call(arr, elem, i);
 	};
 
 	leoDom.isNumeric = function (obj) {
@@ -1366,7 +1372,6 @@
 	var rmargin = /^margin/;
 	var cssExpand = ["Top", "Right", "Bottom", "Left"];
 	var rdisplayswap = /^(none|table(?!-c[ea]).+)/;
-	var rnumsplit = new RegExp("^(" + pnum + ")(.*)$", "i");
 	var cssShow = {
 	    position: "absolute",
 	    visibility: "hidden",
@@ -1382,6 +1387,7 @@
 	(function () {
 	    var boxSizingReliableVal = undefined,
 	        pixelMarginRightVal = undefined,
+	        reliableMarginLeftVal = undefined,
 	        container = _constJs.document.createElement("div"),
 	        div = _constJs.document.createElement("div");
 
@@ -1397,12 +1403,17 @@
 	    container.appendChild(div);
 
 	    function computeStyleTests() {
-	        div.style.cssText = "-webkit-box-sizing:border-box;box-sizing:border-box;" + "display:block;position:absolute;" + "margin:0;margin-top:1%;margin-right:50%;" + "border:1px;padding:1px;" + "top:1%;width:50%;height:4px";
+	        div.style.cssText = "box-sizing:border-box;" + "position:relative;display:block;" + "margin:auto;border:1px;padding:1px;" + "top:1%;width:50%";
 	        div.innerHTML = "";
 	        _constJs.documentElement.appendChild(container);
 
 	        var divStyle = window.getComputedStyle(div);
-	        boxSizingReliableVal = divStyle.height === "4px";
+	        reliableMarginLeftVal = divStyle.marginLeft === "2px";
+	        boxSizingReliableVal = divStyle.width === "4px";
+
+	        // Support: Android 4.0 - 4.3 only
+	        // Some styles come back with percentage values, even though they shouldn't
+	        div.style.marginRight = "50%";
 	        pixelMarginRightVal = divStyle.marginRight === "4px";
 
 	        _constJs.documentElement.removeChild(container);
@@ -1421,21 +1432,11 @@
 	            }
 	            return pixelMarginRightVal;
 	        },
-	        reliableMarginRight: function reliableMarginRight() {
-	            var ret = undefined,
-	                marginDiv = div.appendChild(_constJs.document.createElement("div"));
-
-	            marginDiv.style.cssText = div.style.cssText = "-webkit-box-sizing:content-box;box-sizing:content-box;" + "display:block;margin:0;border:0;padding:0";
-	            marginDiv.style.marginRight = marginDiv.style.width = "0";
-	            div.style.width = "1px";
-	            _constJs.documentElement.appendChild(container);
-
-	            ret = !parseFloat(window.getComputedStyle(marginDiv).marginRight);
-
-	            _constJs.documentElement.removeChild(container);
-	            div.removeChild(marginDiv);
-
-	            return ret;
+	        reliableMarginLeft: function reliableMarginLeft() {
+	            if (boxSizingReliableVal == null) {
+	                computeStyleTests();
+	            }
+	            return reliableMarginLeftVal;
 	        }
 	    });
 	})();
@@ -1564,9 +1565,9 @@
 	}
 
 	function setPositiveNumber(elem, value, subtract) {
-	    var matches = rnumsplit.exec(value);
+	    var matches = rcssNum.exec(value);
 
-	    return matches ? Math.max(0, matches[1] - (subtract || 0)) + (matches[2] || "px") : value;
+	    return matches ? Math.max(0, matches[2] - (subtract || 0)) + (matches[3] || "px") : value;
 	}
 
 	function augmentWidthOrHeight(elem, name, extra, isBorderBox, styles) {
@@ -1791,17 +1792,28 @@
 	        },
 
 	        set: function set(elem, value, extra) {
-	            var styles = extra && getStyles(elem);
-	            return setPositiveNumber(elem, value, extra ? augmentWidthOrHeight(elem, name, extra, _coreJs.leoDom.css(elem, "boxSizing", false, styles) === "border-box", styles) : 0);
+	            var matches = undefined,
+	                styles = extra && getStyles(elem),
+	                subtract = extra && augmentWidthOrHeight(elem, name, extra, _coreJs.leoDom.css(elem, "boxSizing", false, styles) === "border-box", styles);
+
+	            if (subtract && (matches = rcssNum.exec(value)) && (matches[3] || "px") !== "px") {
+
+	                elem.style[name] = value;
+	                value = _coreJs.leoDom.css(elem, name);
+	            }
+
+	            return setPositiveNumber(elem, value, subtract);
 	        }
 	    };
 	});
 
-	_coreJs.leoDom.cssHooks.marginRight = addGetHookIf(_privateJs.support.reliableMarginRight, function (elem, computed) {
+	_coreJs.leoDom.cssHooks.marginLeft = addGetHookIf(_privateJs.support.reliableMarginLeft, function (elem, computed) {
 	    if (computed) {
-	        return swap(elem, {
-	            "display": "inline-block"
-	        }, curCSS, [elem, "marginRight"]);
+	        return (parseFloat(curCSS(elem, "marginLeft")) || elem.getBoundingClientRect().left - swap(elem, {
+	            marginLeft: 0
+	        }, function () {
+	            return elem.getBoundingClientRect().left;
+	        })) + "px";
 	    }
 	});
 
@@ -2131,10 +2143,6 @@
 	    $toggleClass: function $toggleClass(selector, value, stateVal) {
 	        var type = typeof value;
 
-	        if (typeof stateVal === "boolean" && type === "string") {
-	            return stateVal ? _coreJs.leoDom.$addClass(selector, value) : _coreJs.leoDom.$removeClass(selector, value);
-	        }
-
 	        selector = _coreJs.leoDom.$(selector);
 
 	        if (_coreJs.leoDom.isFunction(value)) {
@@ -2152,7 +2160,7 @@
 	                    classNames = value.match(_constJs.rnotwhite) || [];
 
 	                while (className = classNames[_i++]) {
-	                    if (_coreJs.leoDom.$hasClass(node, className)) {
+	                    if (stateVal === false || stateVal !== true && _coreJs.leoDom.$hasClass(node, className)) {
 	                        _coreJs.leoDom.$removeClass(node, className);
 	                    } else {
 	                        _coreJs.leoDom.$addClass(node, className);
@@ -2186,8 +2194,6 @@
 
 	    input.type = "checkbox";
 	    _privateJs.support.checkOn = input.value !== "";
-	    select.disabled = true;
-	    _privateJs.support.optDisabled = !opt.disabled;
 	})();
 
 	var rreturn = /\r/g;
@@ -2205,14 +2211,14 @@
 	                    option = undefined,
 	                    options = elem.options,
 	                    index = elem.selectedIndex,
-	                    one = elem.type === "select-one" || index < 0,
+	                    one = elem.type === "select-one",
 	                    values = one ? null : [],
 	                    max = one ? index + 1 : options.length,
 	                    i = index < 0 ? max : one ? index : 0;
 
 	                for (; i < max; i++) {
 	                    option = options[i];
-	                    if ((option.selected || i === index) && (_privateJs.support.optDisabled ? !option.disabled : option.getAttribute("disabled") === null) && (!option.parentNode.disabled || !_coreJs.leoDom.nodeName(option.parentNode, "optgroup"))) {
+	                    if ((option.selected || i === index) && !option.disabled && (!option.parentNode.disabled || !_coreJs.leoDom.nodeName(option.parentNode, "optgroup"))) {
 
 	                        value = _coreJs.leoDom.$val(option);
 

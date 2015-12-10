@@ -1,6 +1,6 @@
 /**
 +-------------------------------------------------------------------
-* LeoJs--dom--css.js
+* LeoJs--dom--data.js
 +-------------------------------------------------------------------
 * @version    1.0.0 beta
 * @author     leo
@@ -29,34 +29,25 @@ class Data {
         this.expando = Data.expando + Data.uid++;
     }
 
-    register(owner) {
-        let value = {};
-
-        if (owner.nodeType) {
-            owner[this.expando] = value;
-        } else {
-            Object.defineProperty(owner, this.expando, {
-                value: value,
-                writable: true,
-                configurable: true
-            });
-        }
-
-        return owner[this.expando];
-    }
-
     cache(owner) {
-        if (!Data.accepts(owner)) {
-            return {};
+        let value = owner[this.expando];
+
+        if (!value) {
+            value = {};
+
+            if (Data.accepts(owner)) {
+                if (owner.nodeType) {
+                    owner[this.expando] = value;
+                } else {
+                    Object.defineProperty(owner, this.expando, {
+                        value: value,
+                        configurable: true
+                    });
+                }
+            }
         }
 
-        let cache = owner[this.expando];
-
-        if (cache) {
-            return cache;
-        }
-
-        return this.register(owner);
+        return value;
     }
 
     set(owner, data, value) {
@@ -338,7 +329,7 @@ _leoDom.setApi(leoDom, {
         }
 
         selector.forEach((elem) => {
-            var queue = leoDom.queue(elem, type, data);
+            let queue = leoDom.queue(elem, type, data);
 
             if (type === "fx" && queue[0] !== "inprogress") {
                 leoDom.dequeue(elem, type);

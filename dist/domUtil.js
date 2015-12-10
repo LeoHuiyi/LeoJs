@@ -73,6 +73,7 @@
 	var slice = arr.slice;
 	var concat = arr.concat;
 	var rnotwhite = /\S+/g;
+	var indexOf = arr.indexOf;
 
 	exports.document = document;
 	exports.documentElement = documentElement;
@@ -80,6 +81,7 @@
 	exports.slice = slice;
 	exports.concat = concat;
 	exports.rnotwhite = rnotwhite;
+	exports.indexOf = indexOf;
 
 /***/ },
 
@@ -108,7 +110,6 @@
 	var toString = class2type.toString;
 	var hasOwn = class2type.hasOwnProperty;
 	var rgenerateId = /\d\.\d{4}/;
-	var indexOf = _constJs.arr.indexOf;
 
 	"Boolean Number String Function Array Date RegExp Object Error".replace(/[^, ]+/g, function (name) {
 	    class2type["[object " + name + "]"] = name.toLowerCase();
@@ -121,7 +122,7 @@
 	};
 
 	leoDom.inArray = function (elem, arr, i) {
-	    return arr == null ? -1 : indexOf.call(arr, elem, i);
+	    return arr == null ? -1 : _constJs.indexOf.call(arr, elem, i);
 	};
 
 	leoDom.isNumeric = function (obj) {
