@@ -1,4 +1,4 @@
-# LeoJs
+# LeoJs   [Demo](http://leohuiyi.github.io/leoCode.html?htmlUrl=./leoCodeDemo/leoDom/index.html&jsUrl=./leoCodeDemo/leoDom/index.js)
 es6 jqlite 现代浏览器 dom操作;
 
 ## api (类似jquery API, leoDomSelector = css3选择器字符串, dom, html字符串, nodeList, domArr, 文档...)
