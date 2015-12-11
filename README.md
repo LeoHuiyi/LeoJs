@@ -31,3 +31,9 @@ event: $on, $off, $one, $trigger, $triggerHandler;
 uiPosition: uiPosition(leoDomSelector, {
   my: ("center"), at: ("center"), of(leoDomSelector), collision:('flip'), using: (fun), within: (leoDomSelector)
 })[相对另一个元素定位一个元素]
+
+
+
+# License
+
+MIT Licensed. Copyright (c) leoHuiyi 2015.
